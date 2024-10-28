@@ -25,6 +25,14 @@
     --button-primary-hover: #ccc;
     --button-secondary-hover: #1a1a1a;
   }
+
+  .adminMain {
+    text-align: center;
+  }
+
+  .title {
+    margin: 1em;
+  }
 }
 
 .main {
