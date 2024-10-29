@@ -42,17 +42,17 @@ export default function AdminUsers() {
                             {
                                 users.map((user) => {
                                     if (searchName == "" || user.name.toLowerCase().includes(searchName.toLowerCase()))
-                                    return (
-                                        <tr key={user.id}>
-                                            <td>{user.id}</td>
-                                            <td>{user.name}</td>
-                                            <td>{user.location}</td>
-                                            <td>
-                                                <button style={{marginRight: 5}} className='btn btn-primary'>Ban</button>
-                                                <button className='btn btn-danger'>Delete</button>
-                                            </td>
-                                        </tr>
-                                    )
+                                        return (
+                                            <tr key={user.id}>
+                                                <td>{user.id}</td>
+                                                <td>{user.name}</td>
+                                                <td>{user.location}</td>
+                                                <td>
+                                                    <button style={{marginRight: 5}} className='btn btn-primary'>Ban</button>
+                                                    <button className='btn btn-danger'>Delete</button>
+                                                </td>
+                                            </tr>
+                                        )
                                 })
                             }
                         </tbody>
