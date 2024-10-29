@@ -1,6 +1,11 @@
+'use client'
+
+import { useState } from 'react';
 import styles from '../../page.module.css';
 
 export default function AdminUsers() {
+
+    const [searchName, setSearchName] = useState("");
 
     const users = [
         {id: 1, name: 'John Smith', location: 'Miami, FL'},
@@ -18,7 +23,7 @@ export default function AdminUsers() {
                     <div className='card-tools'>
                         <div className='input-group input-group-sm'>
                             <input type='text' className='form-control float-right' placeholder='Enter an username...'
-                            style={{width: '65em'}} />
+                            style={{width: '65em'}} onChange={(e) => setSearchName(e.target.value)} />
                             
                         </div>
                     </div>
@@ -36,6 +41,7 @@ export default function AdminUsers() {
                         <tbody>
                             {
                                 users.map((user) => {
+                                    if (searchName == "" || user.name.toLowerCase().includes(searchName.toLowerCase()))
                                     return (
                                         <tr key={user.id}>
                                             <td>{user.id}</td>
