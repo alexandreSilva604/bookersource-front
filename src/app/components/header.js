@@ -5,7 +5,12 @@ export default function Header(props) {
             <div className="container px-4 px-lg-5 my-1">
                 <div className="text-center">
                     <h1 className="display-4 fw-bolder">{props.title}</h1>
-                    <p className="lead fw-normal mb-0">{props.subtitle}</p>
+                    {
+                        props.subtitle ?
+                        <p className="lead fw-normal mb-0">{props.subtitle}</p>
+                        :
+                        <></>
+                    }
                 </div>
             </div>
         </header>

@@ -35,6 +35,19 @@
   }
 }
 
+.bodyStyling {
+  background-color: #ecf;
+  color: #44b;
+}
+
+.bodyStyling footer {
+  background-color: #44b;
+}
+
+.topBar {
+  background-color: #44b;
+}
+
 .main {
   display: flex;
   flex-direction: column;
