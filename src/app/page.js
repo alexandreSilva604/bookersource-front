@@ -15,7 +15,7 @@ export default function Home() {
               <strong>Plan a day you won't forget</strong>
               <p>Know what your preferences are, and how you can make the most of them.</p>
               <Link href='/get-started'>
-                <button className="btn btn-primary" style={{backgroundColor: '#44b', border: 'none'}}>Get Started</button>
+                <button className="btn btn-primary" style={{backgroundColor: '#22a', border: 'none'}}>Get Started</button>
               </Link>
             </div>
           </div>
