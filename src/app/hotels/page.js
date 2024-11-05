@@ -6,7 +6,6 @@ import Header from "../components/header";
 export default function Hotels() {
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [orderBy, setOrderBy] = useState("Distance");
 
     const [hotels, setHotels] = useState(null);
 
