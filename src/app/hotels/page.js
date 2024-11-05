@@ -39,7 +39,7 @@ export default function Hotels() {
         ];
 
         hotelsLoaded.sort((a, b) => a.distance - b.distance); // Always start sorted by distance 
-        setHotels();
+        setHotels(hotelsLoaded);
     }
 
     function handleOrderByChange(criteria) {
