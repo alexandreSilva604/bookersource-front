@@ -1,6 +1,11 @@
+'use client'
+
+import { useState } from "react";
 import Header from "../components/header";
 
 export default function Hotels() {
+
+    const [searchTerm, setSearchTerm] = useState("");
 
     const hotels = [{
         id: 1,
@@ -25,7 +30,9 @@ export default function Hotels() {
 
             <div className="container" style={{width: 1000}}>
                 <b>Search</b>
-                <input type="text" className="form-control" placeholder="Enter a name or location..." style={{marginTop: 10}} />
+                <input type="text"
+                onChange={(e) => setSearchTerm(e.target.value)} 
+                className="form-control" placeholder="Enter a name or city..." style={{marginTop: 10}} />
             </div>
             <section className="py-5">
                 <div className="container px-4 px-lg-5 mt-5">
@@ -33,8 +40,10 @@ export default function Hotels() {
                     <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {
                         hotels.map((hotel) => {
-
-                            return (
+                            
+                            if (searchTerm == "" || hotel.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                            || hotel.city.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                return (
                                     <div key={hotel.id} className="col mb-5">
                                         <div className="card h-100">
                                             <img className="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
@@ -53,8 +62,8 @@ export default function Hotels() {
                                             </div>
                                         </div>
                                     </div>
-                                
-                            )
+                                )
+                            }
                         })
                     }
                     </div>
