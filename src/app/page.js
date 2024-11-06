@@ -1,5 +1,4 @@
 import Image from "next/image";
-import styles from "./page.module.css";
 import Header from "./components/header";
 import Link from "next/link";
 
@@ -14,7 +13,7 @@ export default function Home() {
             <div>
               <strong>Plan a day you won't forget</strong>
               <p>Know what your preferences are, and how you can make the most of them.</p>
-              <Link href='/get-started'>
+              <Link href='/hotels'>
                 <button className="btn btn-primary" style={{backgroundColor: '#22a', border: 'none'}}>Get Started</button>
               </Link>
             </div>

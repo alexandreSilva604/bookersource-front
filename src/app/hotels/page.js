@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Header from "../components/header";
+import Link from "next/link";
 
 export default function Hotels() {
 
@@ -82,7 +83,7 @@ export default function Hotels() {
     return (
         <div>
             <Header title="Hotels" />
-
+            
             <div className="container" style={{width: 1000}}>
                 <b>Search</b>
                 <input type="text"
@@ -121,7 +122,9 @@ export default function Hotels() {
                                             </div>
                                             <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                                 <div className="text-center">
-                                                    <button type="button" className="btn btn-outline-dark mt-auto">Book</button>
+                                                    <Link href={`/book/${hotel.id}`}>
+                                                        <button type="button" className="btn btn-outline-dark mt-auto">Book</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
