@@ -54,7 +54,30 @@ export default function BookHotel() {
         <div>
         {
             hotel ?
-            <Header title={"This is the hotel booking page for  " + hotel.name} />
+            <section className="py-5">
+                <Header title={hotel.name} subtitle={hotel.city} />
+
+                <div className="container card" style={{backgroundColor: '#22b', color: 'white', width: '50em', padding: '2.5em'}}>
+                    <div style={{textAlign: 'center', marginBottom: 20}}>
+                        <h1>Choose your room</h1>
+                        <h4>3 out of 10 vacancies available</h4>
+                    </div>
+                    <p className="fw-bold" style={{textAlign: 'center'}}>Floor 1</p>
+                    <div style={{display: 'flex'}}>
+                        <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Room" style={{width: '25em'}} />
+                        <div style={{marginLeft: 20}}>
+                            <h5>Price per day</h5>
+                            <h6>$ 50.00</h6>
+                            <br/>
+                            <h5>Capacity</h5>
+                            <h6>2 people</h6>
+                            <h6>2 beds</h6>
+                        </div>
+                    </div>
+
+                    <button type="button" className="btn btn-light" style={{width: 100, marginTop: 20}}>Choose</button>
+                </div>
+            </section>
             :
             <></>
         }
