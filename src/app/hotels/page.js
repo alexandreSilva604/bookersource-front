@@ -51,12 +51,12 @@ export default function Hotels() {
             currentHotels.push(hotel)
         });
 
-        if (criteria == "Distance") {
+        if (criteria == "Nearest") {
             currentHotels.sort((a, b) => a.distance - b.distance);
             setHotels(currentHotels);
         }
 
-        if (criteria == "Name") {
+        if (criteria == "Alphabetical") {
             currentHotels.sort((a, b) => {
                 let prevName = a.name.toLowerCase();
                 let nextName = b.name.toLowerCase();
@@ -91,10 +91,10 @@ export default function Hotels() {
                 className="form-control" placeholder="Enter a name or city..." style={{marginTop: 10, marginBottom: 10}} />
                 <hr/>
                 <b>Order By</b>
-                <select className="form-select" style={{width: 125, marginTop: 10, marginBottom: 10}} 
+                <select className="form-select" style={{width: 150, marginTop: 10, marginBottom: 10}} 
                     onChange={(e) => handleOrderByChange(e.target.value)}>
-                    <option value="Distance">Distance</option>
-                    <option value="Name">Name</option>
+                    <option value="Nearest">Nearest</option>
+                    <option value="Alphabetical">Alphabetical</option>
                 </select>
             </div>
             <section className="py-2">
