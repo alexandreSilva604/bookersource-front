@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export default function BookHotel() {
 
     const [hotel, setHotel] = useState(null);
+    const [rooms, setRooms] = useState(null);
     const params = useParams();
 
     function loadHotel() {
@@ -38,11 +39,94 @@ export default function BookHotel() {
             },
         ];
 
-        hotels.forEach(hotel => {
-            if (hotel.id == params.hotelId) { 
-                setHotel(hotel);
-            }
-        })
+        let i = 0;
+
+        while (i < hotels.length && hotels[i].id != params.hotelId) {
+            i++;
+        }
+
+        if (i < hotels.length) { 
+            setHotel(hotels[i]);
+            loadRooms(hotels[i].id);
+        }
+    }
+
+    function loadRooms(hotelId) {
+
+        // Turn this into a fetch in the future
+        switch(hotelId) {
+
+            case 1:
+                setRooms([
+                {
+                    id: 1,
+                    number: 1,
+                    pricePerDay: 25.99,
+                    capacityPeople: 2,
+                    numberOfBeds: 2,
+                    isOccupied: true
+                },
+                {
+                    id: 2,
+                    number: 2,
+                    pricePerDay: 50.00,
+                    capacityPeople: 4,
+                    numberOfBeds: 3,
+                    isOccupied: false
+                },
+                ])
+                break;
+            
+            case 2:
+                setRooms([
+                {
+                    id: 3,
+                    number: 1,
+                    pricePerDay: 22.99,
+                    capacityPeople: 2,
+                    numberOfBeds: 2,
+                    isOccupied: false
+                },
+                {
+                    id: 4,
+                    number: 2,
+                    pricePerDay: 75.00,
+                    capacityPeople: 4,
+                    numberOfBeds: 3,
+                    isOccupied: true
+                },
+            ])
+            break;
+
+            case 3:
+                setRooms([
+                {
+                    id: 5,
+                    number: 1,
+                    pricePerDay: 29.99,
+                    capacityPeople: 2,
+                    numberOfBeds: 2,
+                    isOccupied: false
+                },
+                {
+                    id: 6,
+                    number: 2,
+                    pricePerDay: 45.00,
+                    capacityPeople: 4,
+                    numberOfBeds: 3,
+                    isOccupied: false
+                },
+                {
+                    id: 7,
+                    number: 3,
+                    pricePerDay: 30.00,
+                    capacityPeople: 3,
+                    numberOfBeds: 2,
+                    isOccupied: false
+                },
+            ])
+            break;
+        }
     }
 
     useEffect(() => {
@@ -53,8 +137,8 @@ export default function BookHotel() {
 
         <div>
         {
-            hotel ?
-            <section className="py-5">
+            hotel && rooms ?
+            <section className="py-3">
                 <Header title={hotel.name} subtitle={hotel.city} />
 
                 <div className="container card" style={{backgroundColor: '#22b', color: 'white', width: '50em', padding: '2.5em'}}>
@@ -62,20 +146,37 @@ export default function BookHotel() {
                         <h1>Choose your room</h1>
                         <h4>3 out of 10 vacancies available</h4>
                     </div>
-                    <p className="fw-bold" style={{textAlign: 'center'}}>Floor 1</p>
-                    <div style={{display: 'flex'}}>
-                        <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Room" style={{width: '25em'}} />
-                        <div style={{marginLeft: 20}}>
-                            <h5>Price per day</h5>
-                            <h6>$ 50.00</h6>
-                            <br/>
-                            <h5>Capacity</h5>
-                            <h6>2 people</h6>
-                            <h6>2 beds</h6>
-                        </div>
-                    </div>
+                    <div>
+                        {
+                            rooms.map((room) => {
+                                return (
+                                    <div key={room.id} style={{marginTop: 20}}>
+                                        <hr/>
+                                        <h4 style={{textAlign: 'center', marginBottom: 20}}>Room {room.number}</h4>
+                                        <div style={{display: 'flex'}}>
+                                            <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Room" style={{width: '25em'}} />
+                                            <div style={{marginLeft: 20}}>
+                                                <h5>Price per day</h5>
+                                                <h6>$ {parseFloat(room.pricePerDay).toFixed(2)}</h6>
+                                                <br/>
+                                                <h5>Capacity</h5>
+                                                <h6>{room.capacityPeople} people</h6>
+                                                <h6>{room.numberOfBeds} beds</h6>
+                                            </div>
+                                        </div>
 
-                    <button type="button" className="btn btn-light" style={{width: 100, marginTop: 20}}>Choose</button>
+                                        {
+                                            room.isOccupied ?
+                                            <button type="button" className="btn btn-light" style={{width: 100, marginTop: 20}} disabled>Occupied</button>
+                                            :
+                                            <button type="button" className="btn btn-light" style={{width: 100, marginTop: 20}}>Choose</button>
+                                        }
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    
                 </div>
             </section>
             :
