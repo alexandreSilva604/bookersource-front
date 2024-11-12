@@ -3,11 +3,14 @@
 import Header from "@/app/components/header";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 export default function BookHotel() {
 
     const [hotel, setHotel] = useState(null);
     const [rooms, setRooms] = useState(null);
+    const [occupiedRooms, setOccupiedRooms] = useState(0);
     const params = useParams();
 
     function loadHotel() {
@@ -144,18 +147,16 @@ export default function BookHotel() {
                 <div className="container card" style={{backgroundColor: '#22b', color: 'white', width: '50em', padding: '2.5em'}}>
                     <div style={{textAlign: 'center', marginBottom: 20}}>
                         <h1>Choose your room</h1>
-                        <h4>3 out of 10 vacancies available</h4>
                     </div>
-                    <div>
+                    <Carousel showIndicators={false} showStatus={false} showThumbs={false}>
                         {
                             rooms.map((room) => {
                                 return (
-                                    <div key={room.id} style={{marginTop: 20}}>
-                                        <hr/>
-                                        <h4 style={{textAlign: 'center', marginBottom: 20}}>Room {room.number}</h4>
+                                    <div key={room.id} style={{paddingLeft: 40, paddingRight: 40}}>
+                                        <h4 style={{textAlign: 'center', marginBottom: 40}}>Room {room.number}</h4>
                                         <div style={{display: 'flex'}}>
                                             <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Room" style={{width: '25em'}} />
-                                            <div style={{marginLeft: 20}}>
+                                            <div style={{marginLeft: 20, textAlign: 'start'}}>
                                                 <h5>Price per day</h5>
                                                 <h6>$ {parseFloat(room.pricePerDay).toFixed(2)}</h6>
                                                 <br/>
@@ -167,15 +168,15 @@ export default function BookHotel() {
 
                                         {
                                             room.isOccupied ?
-                                            <button type="button" className="btn btn-light" style={{width: 100, marginTop: 20}} disabled>Occupied</button>
+                                            <button type="button" className="btn btn-light" style={{width: 100, marginTop: 40}} disabled>Occupied</button>
                                             :
-                                            <button type="button" className="btn btn-light" style={{width: 100, marginTop: 20}}>Choose</button>
+                                            <button type="button" className="btn btn-light" style={{width: 100, marginTop: 40}}>Choose</button>
                                         }
                                     </div>
                                 )
                             })
                         }
-                    </div>
+                    </Carousel>
                     
                 </div>
             </section>
