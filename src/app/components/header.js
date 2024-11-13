@@ -1,7 +1,7 @@
 export default function Header(props) {
 
     return (
-        <header className="py-5">
+        <header className="py-3">
             <div className="container px-4 px-lg-5 my-1">
                 <div className="text-center">
                     <h1 className="display-4 fw-bolder">{props.title}</h1>
