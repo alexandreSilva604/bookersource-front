@@ -1,7 +1,51 @@
+'use client'
+
 import Link from "next/link";
 import Header from "../components/header";
+import { useEffect, useState } from "react";
 
 export default function SignUpPage() {
+
+    const [countries, setCountries] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState("none");
+
+    function loadCountries() {
+
+        fetch("https://restcountries.com/v3.1/all")
+        .then(r => {
+            return r.json();
+        })
+        .then(r => {
+
+            let countryNames = [];
+            
+            r.forEach((country) => {
+                countryNames.push(country.name.common);
+            })
+
+            console.log(countryNames);
+            countryNames.sort((prevName, nextName) => {
+
+                if (prevName < nextName) {
+                    return -1;
+                }
+
+                if (prevName > nextName) {
+                    return 1;
+                }
+
+                return 0;
+            });
+            setCountries(countryNames);
+        })
+        .catch(e => {
+            console.log(e.message);
+        })
+    }
+
+    useEffect(() => {
+        loadCountries();
+    },[])
 
     return (
         <div>
@@ -22,20 +66,29 @@ export default function SignUpPage() {
                         </div>
                         <div className="form-group col-md-3">
                             <label className="fw-bold">Country</label>
-                            <select className="form-select">
-                                <option value={"none"}>-- SELECT A COUNTRY --</option>
+                            <select className="form-select" onChange={(e) => setSelectedCountry(e.target.value)}>
+                                <option value={"none"}>SELECT A COUNTRY</option>
+                                {
+                                    countries ?
+                                    
+                                    countries.map((country, index) => {
+                                        return <option value={country} key={index}>{country}</option>
+                                    })
+                                    :
+                                    <></>
+                                }
                             </select>
                         </div>
                         <div className="form-group col-md-3">
                             <label className="fw-bold">State</label>
-                            <select className="form-select">
-                                <option value={"none"}>-- SELECT A STATE --</option>
+                            <select className="form-select" disabled={selectedCountry == "none"}>
+                                <option value={"none"}>SELECT A STATE</option>
                             </select>
                         </div>
                         <div className="form-group col-md-3">
                             <label className="fw-bold">City</label>
                             <select className="form-select">
-                                <option value={"none"}>-- SELECT A CITY --</option>
+                                <option value={"none"}>SELECT A CITY</option>
                             </select>
                         </div>
                     </div>
