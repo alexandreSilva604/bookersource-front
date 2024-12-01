@@ -20,6 +20,24 @@ export default function SignUpPage() {
                             <label className="fw-bold">Birth</label>
                             <input type="date" className="form-control" />
                         </div>
+                        <div className="form-group col-md-3">
+                            <label className="fw-bold">Country</label>
+                            <select className="form-select">
+                                <option value={"none"}>-- SELECT A COUNTRY --</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-3">
+                            <label className="fw-bold">State</label>
+                            <select className="form-select">
+                                <option value={"none"}>-- SELECT A STATE --</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-3">
+                            <label className="fw-bold">City</label>
+                            <select className="form-select">
+                                <option value={"none"}>-- SELECT A CITY --</option>
+                            </select>
+                        </div>
                     </div>
                     <div className="row mb-4">
                         <div className="form-group col-md-8">
