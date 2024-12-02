@@ -7,7 +7,9 @@ import { useEffect, useState } from "react";
 export default function SignUpPage() {
 
     const [countries, setCountries] = useState([]);
+
     const [selectedCountry, setSelectedCountry] = useState("none");
+    const [countryState, setCountryState] = useState("");
 
     function loadCountries() {
 
@@ -17,30 +19,29 @@ export default function SignUpPage() {
         })
         .then(r => {
 
-            let countryNames = [];
+            let countryArray = [];
             
             r.forEach((country) => {
-                countryNames.push(country.name.common);
-            })
+                countryArray.push(country.name.common);
+            });
 
-            console.log(countryNames);
-            countryNames.sort((prevName, nextName) => {
+            countryArray.sort((prevCountryName, nextCountryName) => {
 
-                if (prevName < nextName) {
+                if (prevCountryName < nextCountryName) {
                     return -1;
                 }
 
-                if (prevName > nextName) {
+                if (prevCountryName > nextCountryName) {
                     return 1;
                 }
 
                 return 0;
             });
-            setCountries(countryNames);
+            setCountries(countryArray);
         })
         .catch(e => {
             console.log(e.message);
-        })
+        });
     }
 
     useEffect(() => {
@@ -81,15 +82,12 @@ export default function SignUpPage() {
                         </div>
                         <div className="form-group col-md-3">
                             <label className="fw-bold">State</label>
-                            <select className="form-select" disabled={selectedCountry == "none"}>
-                                <option value={"none"}>SELECT A STATE</option>
-                            </select>
+                            <input className="form-control" disabled={selectedCountry == "none"} 
+                            onChange={(e) => setCountryState(e.target.value)} />
                         </div>
                         <div className="form-group col-md-3">
                             <label className="fw-bold">City</label>
-                            <select className="form-select">
-                                <option value={"none"}>SELECT A CITY</option>
-                            </select>
+                            <input className="form-control" disabled={countryState == ""} />
                         </div>
                     </div>
                     <div className="row mb-4">
