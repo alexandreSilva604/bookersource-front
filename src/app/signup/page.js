@@ -18,6 +18,25 @@ export default function SignUpPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [isAdministrator, setIsAdministrator] = useState(false);
+
+    function registerUser() {
+
+        // TO DO: Error handling
+        const userToRegister = {
+            name: name,
+            dateOfBirth: dateOfBirth,
+            country: selectedCountry,
+            state: countryState,
+            city: city,
+            address: address,
+            zipCode: zipCode,
+            email: email,
+            password: password,
+            isAdministrator: isAdministrator
+        };
+
+    }
 
     function loadCountries() {
 
@@ -135,16 +154,25 @@ export default function SignUpPage() {
                 </form>
                 
                 <hr/>
-                <Link href="/">
-                    <button className="btn btn-danger" 
-                    style={{marginTop: 10, marginBottom: 10, marginRight: 20, width: "6em", border: 'none'}}>
-                        Cancel
+                <div>
+                    <div className="row mb-2">
+                        <div className="form-check col-sm-4" style={{marginLeft: "0.75rem"}}>
+                            <input type="checkbox" className="form-check-input"
+                                onChange={(e) => setIsAdministrator(e.target.value)} />
+                            <label className="form-check-label fw-bold">You are a hotel administrator</label>
+                        </div>
+                    </div>
+                    <Link href="/">
+                        <button className="btn btn-danger" 
+                        style={{marginTop: 10, marginBottom: 10, marginRight: 20, width: "6em", border: 'none'}}>
+                            Cancel
+                        </button>
+                    </Link>
+                    <button type="button" className="btn btn-primary" onClick={registerUser()} 
+                    style={{marginTop: 10, marginBottom: 10, width: "6em", backgroundColor: '#22a', border: 'none'}}>
+                        Register
                     </button>
-                </Link>
-                <button type="button" className="btn btn-primary" 
-                style={{marginTop: 10, marginBottom: 10, width: "6em", backgroundColor: '#22a', border: 'none'}}>
-                    Register
-                </button>
+                </div>
             </div>
         </div>
     );
