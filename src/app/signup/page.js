@@ -124,7 +124,9 @@ export default function SignUpPage() {
         let yearEntered = new Date(newDate).getFullYear();
         let currentYear = new Date().getFullYear();
 
-        if (yearEntered <= currentYear - 18) {
+        let age = currentYear - yearEntered;
+
+        if (age >= 18 && age <= 100) {
             setValidBirth(true);
         }
         else {
@@ -158,7 +160,7 @@ export default function SignUpPage() {
                         </div>
                     </div>
                     <div className="row mb-4">
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-4">
                             <label className="fw-bold">
                                 Birth <h6 style={{fontSize: 12, fontWeight: "bold"}}>Minimum age: 18 years</h6>
                             </label>
