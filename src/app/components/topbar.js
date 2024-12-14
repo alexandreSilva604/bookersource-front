@@ -16,7 +16,7 @@ export default function TopBar() {
                     <ul className="navbar-nav align-items-center">
                         <li className="nav-item"><Link className="nav-link" href="/login" style={{color: '#22a'}}>Login</Link></li>
                         |
-                        <li className="nav-item"><Link className="nav-link" href="/signup" style={{color: '#22a'}}>Sign Up</Link></li>
+                        <li className="nav-item"><Link className="nav-link" href="/signup" style={{color: '#22a'}}>Sign In</Link></li>
                     </ul>
                 </div>
             </div>

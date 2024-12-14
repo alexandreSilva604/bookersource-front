@@ -20,22 +20,58 @@ export default function SignUpPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isAdministrator, setIsAdministrator] = useState(false);
 
+    const [validName, setValidName] = useState("Initial State");
+    const [validBirth, setValidBirth] = useState("Initial State");
+    const [validCountry, setValidCountry] = useState("Initial State");
+    const [validState, setValidState] = useState("Initial State");
+    const [validCity, setValidCity] = useState("Initial State");
+    const [validAddress, setValidAddress] = useState("Initial State");
+    const [validZipCode, setValidZipCode] = useState("Initial State");
+    const [validEmail, setValidEmail] = useState("Initial State");
+    const [validPassword, setValidPassword] = useState("Initial State");
+    const [validConfirmPassword, setValidConfirmPassword] = useState("Initial State");
+
+    function dataIsValid() {
+
+        return validName == true && validBirth == true && validCountry == true && validState == true && validCity == true &&
+            validAddress == true && validZipCode == true && validEmail == true && validPassword == true && 
+            validConfirmPassword == true;
+    }
+
     function registerUser() {
 
-        // TO DO: Error handling
-        const userToRegister = {
-            name: name,
-            dateOfBirth: dateOfBirth,
-            country: selectedCountry,
-            state: countryState,
-            city: city,
-            address: address,
-            zipCode: zipCode,
-            email: email,
-            password: password,
-            isAdministrator: isAdministrator
-        };
+        if (dataIsValid()) {
 
+            const userToRegister = {
+                name: name,
+                dateOfBirth: dateOfBirth,
+                country: selectedCountry,
+                state: countryState,
+                city: city,
+                address: address,
+                zipCode: zipCode,
+                email: email,
+                password: password,
+                isAdministrator: isAdministrator
+            };
+    
+            fetch("http://localhost:9000/users/add", {
+                method: "POST",
+                body: JSON.stringify(userToRegister)
+            })
+            .then(r => {
+                return r.json();
+            })
+            .then(r => {
+                alert("You have been successfully registered!");
+            })
+            .catch(e => {
+                alert(e.message);
+            });
+        }
+        else {
+            alert("Please fill the entire form.")
+        }
     }
 
     function loadCountries() {
@@ -71,6 +107,33 @@ export default function SignUpPage() {
         });
     }
 
+    function handleNameInput(newName) {
+
+        if (newName.length >= 8) {
+            setValidName(true);
+        }
+        else {
+            setValidName(false);
+        }
+
+        setName(newName);
+    }
+
+    function handleBirthInput(newDate) {
+
+        let yearEntered = new Date(newDate).getFullYear();
+        let currentYear = new Date().getFullYear();
+
+        if (yearEntered <= currentYear - 18) {
+            setValidBirth(true);
+        }
+        else {
+            setValidBirth(false);
+        }
+
+        setDateOfBirth(newDate);
+    }
+
     useEffect(() => {
         loadCountries();
     },[])
@@ -84,15 +147,33 @@ export default function SignUpPage() {
                     <div className="row mb-4">
                         <div className="form-group">
                             <label className="fw-bold">Full Name</label>
-                            <input type="text" className="form-control" onChange={(e) => setName(e.target.value)} />
+                            <input type="text" className={validName == false ? "form-control is-invalid" : "form-control"} 
+                            onChange={(e) => handleNameInput(e.target.value)} />
+                            {
+                                validName == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please enter a name with at least 8 characters.</p>
+                                :
+                                <></>
+                            }
                         </div>
                     </div>
                     <div className="row mb-4">
                         <div className="form-group col-md-3">
-                            <label className="fw-bold">Birth</label>
-                            <input type="date" className="form-control" onChange={(e) => setDateOfBirth(e.target.value)} />
+                            <label className="fw-bold">
+                                Birth <h6 style={{fontSize: 12, fontWeight: "bold"}}>Minimum age: 18 years</h6>
+                            </label>
+                            <input type="date" className={validBirth == false ? "form-control is-invalid" : "form-control"} 
+                            onChange={(e) => handleBirthInput(e.target.value)} />
+                            {
+                                validBirth == false ?
+                                <p style={{color: "red", fontSize: 14}}>Enter a valid date.</p>
+                                :
+                                <></>
+                            }
                         </div>
-                        <div className="form-group col-md-3">
+                    </div>
+                    <div className="row mb-4">
+                        <div className="form-group col-md-4">
                             <label className="fw-bold">Country</label>
                             <select className="form-select" onChange={(e) => setSelectedCountry(e.target.value)}>
                                 <option value={"none"}>SELECT A COUNTRY</option>
@@ -107,13 +188,13 @@ export default function SignUpPage() {
                                 }
                             </select>
                         </div>
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-4">
                             <label className="fw-bold">State</label>
                             <input className="form-control" disabled={selectedCountry == "none"}
                                 placeholder={selectedCountry == "none" ? "Please select the country" : ""}
                                 onChange={(e) => setCountryState(e.target.value)} />
                         </div>
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-4">
                             <label className="fw-bold">City</label>
                             <input className="form-control" disabled={countryState == ""}
                                 placeholder={countryState == "" ? "Please fill the state" : ""} 
@@ -148,7 +229,7 @@ export default function SignUpPage() {
                         <div className="form-group col-sm-4">
                             <label className="fw-bold">Confirm Password</label>
                             <input type="password" className="form-control"
-                                onChange={(e) => setConfirmPassword(e.target.value)} />
+                                onChange={(e) => setConfirmPassword(e.target.checked)} />
                         </div>
                     </div>
                 </form>
@@ -158,7 +239,7 @@ export default function SignUpPage() {
                     <div className="row mb-2">
                         <div className="form-check col-sm-4" style={{marginLeft: "0.75rem"}}>
                             <input type="checkbox" className="form-check-input"
-                                onChange={(e) => setIsAdministrator(e.target.value)} />
+                                onChange={(e) => setIsAdministrator(e.target.checked)} />
                             <label className="form-check-label fw-bold">You are a hotel administrator</label>
                         </div>
                     </div>
@@ -168,7 +249,7 @@ export default function SignUpPage() {
                             Cancel
                         </button>
                     </Link>
-                    <button type="button" className="btn btn-primary" onClick={registerUser()} 
+                    <button type="button" className="btn btn-primary" onClick={registerUser} 
                     style={{marginTop: 10, marginBottom: 10, width: "6em", backgroundColor: '#22a', border: 'none'}}>
                         Register
                     </button>
