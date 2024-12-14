@@ -107,34 +107,41 @@ export default function SignUpPage() {
         });
     }
 
-    function handleNameInput(newName) {
+    function handleNameInput(nameInput) {
 
-        if (newName.length >= 8) {
-            setValidName(true);
-        }
-        else {
-            setValidName(false);
-        }
-
-        setName(newName);
+        setValidName(nameInput.length >= 8);    
+        setName(nameInput);
     }
 
-    function handleBirthInput(newDate) {
+    function handleBirthInput(birthInput) {
 
-        let yearEntered = new Date(newDate).getFullYear();
+        let yearEntered = new Date(birthInput).getFullYear();
         let currentYear = new Date().getFullYear();
 
         let age = currentYear - yearEntered;
 
-        if (age >= 18 && age <= 100) {
-            setValidBirth(true);
-        }
-        else {
-            setValidBirth(false);
-        }
-
-        setDateOfBirth(newDate);
+        setValidBirth(age >= 18 && age <= 100);
+        setDateOfBirth(birthInput);
     }
+
+    function handleCountryInput(countryInput) {
+
+        setValidCountry(countryInput != "none");
+        setSelectedCountry(countryInput);
+    }
+
+    function handleStateInput(stateInput) {
+
+        setValidState(stateInput.length > 1);
+        setCountryState(stateInput);
+    }
+
+    function handleCityInput(cityInput) {
+
+        setValidCity(cityInput != "");
+        setCity(cityInput);
+    }
+
 
     useEffect(() => {
         loadCountries();
@@ -177,7 +184,8 @@ export default function SignUpPage() {
                     <div className="row mb-4">
                         <div className="form-group col-md-4">
                             <label className="fw-bold">Country</label>
-                            <select className="form-select" onChange={(e) => setSelectedCountry(e.target.value)}>
+                            <select className={validCountry == false ? "form-select is-invalid" : "form-select"} 
+                            onChange={(e) => handleCountryInput(e.target.value)}>
                                 <option value={"none"}>SELECT A COUNTRY</option>
                                 {
                                     countries ?
@@ -189,18 +197,38 @@ export default function SignUpPage() {
                                     <></>
                                 }
                             </select>
+                            {
+                                validCountry == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please select a country.</p>
+                                :
+                                <></>
+                            }
                         </div>
                         <div className="form-group col-md-4">
                             <label className="fw-bold">State</label>
-                            <input className="form-control" disabled={selectedCountry == "none"}
+                            <input className={validState == false ? "form-control is-invalid" : "form-control"} 
+                                disabled={selectedCountry == "none"}
                                 placeholder={selectedCountry == "none" ? "Please select the country" : ""}
-                                onChange={(e) => setCountryState(e.target.value)} />
+                                onChange={(e) => handleStateInput(e.target.value)} />
+                            {
+                                validState == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please enter a state name.</p>
+                                :
+                                <></>
+                            }
                         </div>
                         <div className="form-group col-md-4">
                             <label className="fw-bold">City</label>
-                            <input className="form-control" disabled={countryState == ""}
+                            <input className={validCity == false ? "form-control is-invalid" : "form-control"}
+                                disabled={countryState == ""}
                                 placeholder={countryState == "" ? "Please fill the state" : ""} 
-                                onChange={(e) => setCity(e.target.value)} />
+                                onChange={(e) => handleCityInput(e.target.value)} />
+                            {
+                                validCity == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please enter a city name.</p>
+                                :
+                                <></>
+                            }
                         </div>
                     </div>
                     <div className="row mb-4">
