@@ -31,6 +31,9 @@ export default function SignUpPage() {
     const [validPassword, setValidPassword] = useState("Initial State");
     const [validConfirmPassword, setValidConfirmPassword] = useState("Initial State");
 
+    const [warning, setWarning] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+
     function dataIsValid() {
 
         return validName == true && validBirth == true && validCountry == true && validState == true && validCity == true &&
@@ -40,7 +43,10 @@ export default function SignUpPage() {
 
     function registerUser() {
 
+        setWarning("");
+
         if (dataIsValid()) {
+            setIsLoading(true);
 
             const userToRegister = {
                 name: name,
@@ -64,13 +70,15 @@ export default function SignUpPage() {
             })
             .then(r => {
                 alert("You have been successfully registered!");
+                setIsLoading(false);
             })
             .catch(e => {
-                alert(e.message);
+                setWarning("Error: " + e.message);
+                setIsLoading(false);
             });
         }
         else {
-            alert("Please fill the entire form.")
+            setWarning("Please fill the form correctly.");
         }
     }
 
@@ -142,6 +150,50 @@ export default function SignUpPage() {
         setCity(cityInput);
     }
 
+    function handleAddressInput(addressInput) {
+
+        setValidAddress(addressInput != "");
+        setAddress(addressInput);
+    }
+
+    function handleZipCodeInput(zipCodeInput) {
+
+        setValidZipCode(zipCodeInput != "");
+        setZipCode(zipCodeInput);
+    }
+
+    function handleEmailInput(emailInput) {
+
+        let emailHasAnAt = false;
+        let emailHasADot = false;
+
+        for (let i = 0; i < emailInput.length; i++) {
+
+            if (emailInput[i] == "@") {
+                emailHasAnAt = true;
+            }
+
+            if (emailHasAnAt && emailInput[i] == "." && i < emailInput.length - 1) {
+                emailHasADot = true; 
+            }
+        }
+
+        setValidEmail(emailHasAnAt && emailHasADot);
+        setEmail(emailInput);
+    }
+
+    function handlePasswordInput(passwordInput) {
+
+        setValidPassword(passwordInput != "");
+        setPassword(passwordInput);
+        setValidConfirmPassword(confirmPassword == passwordInput);
+    }
+
+    function handleConfirmPasswordInput(confirmPasswordInput) {
+
+        setValidConfirmPassword(confirmPasswordInput != "" && confirmPasswordInput == password);
+        setConfirmPassword(confirmPasswordInput);
+    }
 
     useEffect(() => {
         loadCountries();
@@ -157,7 +209,7 @@ export default function SignUpPage() {
                         <div className="form-group">
                             <label className="fw-bold">Full Name</label>
                             <input type="text" className={validName == false ? "form-control is-invalid" : "form-control"} 
-                            onChange={(e) => handleNameInput(e.target.value)} />
+                            onChange={(e) => handleNameInput(e.target.value)} autoFocus={true} />
                             {
                                 validName == false ?
                                 <p style={{color: "red", fontSize: 14}}>Please enter a name with at least 8 characters.</p>
@@ -234,32 +286,64 @@ export default function SignUpPage() {
                     <div className="row mb-4">
                         <div className="form-group col-md-8">
                             <label className="fw-bold">Address</label>
-                            <input type="text" className="form-control" placeholder="Example: Elm Street, 180"
-                                onChange={(e) => setAddress(e.target.value)} />
+                            <input type="text" className={validAddress == false ? "form-control is-invalid" : "form-control"} 
+                                placeholder="Example: Elm Street, 180"
+                                onChange={(e) => handleAddressInput(e.target.value)} />
+                            {
+                                validAddress == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please enter your address.</p>
+                                :
+                                <></>
+                            }
                         </div>
                         <div className="form-group col-md-4">
                             <label className="fw-bold">ZIP Code</label>
-                            <input type="text" className="form-control"
-                                onChange={(e) => setZipCode(e.target.value)} />
+                            <input type="text" className={validZipCode == false ? "form-control is-invalid" : "form-control"}
+                                onChange={(e) => handleZipCodeInput(e.target.value)} />
+                            
+                            {
+                                validZipCode == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please enter your ZIP code.</p>
+                                :
+                                <></>
+                            }
                         </div>
                     </div>
                     <div className="row mb-4">
                         <div className="form-group col-md-6">
                             <label className="fw-bold">Email</label>
-                            <input type="email" className="form-control"
-                                onChange={(e) => setEmail(e.target.value)} />
+                            <input type="email" className={validEmail == false ? "form-control is-invalid" : "form-control"}
+                                onChange={(e) => handleEmailInput(e.target.value)} />
+                            {
+                                validEmail == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please enter a valid email.</p>
+                                :
+                                <></>
+                            }
                         </div>
                     </div>
                     <div className="row mb-4">
                         <div className="form-group col-sm-4">
                             <label className="fw-bold">Password</label>
-                            <input type="password" className="form-control"
-                                onChange={(e) => setPassword(e.target.value)} />
+                            <input type="password" className={validPassword == false ? "form-control is-invalid" : "form-control"}
+                                onChange={(e) => handlePasswordInput(e.target.value)} />
+                            {
+                                validPassword == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please enter a password.</p>
+                                :
+                                <></>
+                            }
                         </div>
                         <div className="form-group col-sm-4">
                             <label className="fw-bold">Confirm Password</label>
-                            <input type="password" className="form-control"
-                                onChange={(e) => setConfirmPassword(e.target.checked)} />
+                            <input type="password" className={validConfirmPassword == false ? "form-control is-invalid" : "form-control"}
+                                onChange={(e) => handleConfirmPasswordInput(e.target.value)} />
+                            {
+                                validConfirmPassword == false ?
+                                <p style={{color: "red", fontSize: 14}}>This must match the entered password.</p>
+                                :
+                                <></>
+                            }
                         </div>
                     </div>
                 </form>
@@ -284,6 +368,21 @@ export default function SignUpPage() {
                         Register
                     </button>
                 </div>
+                {
+                    warning != "" ?
+                    <p style={{color: "red", fontWeight: "bold"}}>{warning}</p>
+                    :
+                    <></>
+                }
+                {
+                    isLoading ?
+                    <div>
+                        <div className="spinner-border" role="status" style={{marginRight: 10}}></div>
+                        <span>Processing your data...</span>
+                    </div>
+                    :
+                    <></>
+                }
             </div>
         </div>
     );
