@@ -201,7 +201,7 @@ export default function SignUpPage() {
 
     return (
         <div>
-            <Header title="Sign Up" />
+            <Header title="Sign In" />
 
             <div className="container" style={{width: "60em", padding: "2em"}}>
                 <form>
