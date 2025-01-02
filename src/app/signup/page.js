@@ -14,7 +14,6 @@ export default function SignUpPage() {
     const [countryState, setCountryState] = useState("");
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
-    const [zipCode, setZipCode] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,7 +25,6 @@ export default function SignUpPage() {
     const [validState, setValidState] = useState("Initial State");
     const [validCity, setValidCity] = useState("Initial State");
     const [validAddress, setValidAddress] = useState("Initial State");
-    const [validZipCode, setValidZipCode] = useState("Initial State");
     const [validEmail, setValidEmail] = useState("Initial State");
     const [validPassword, setValidPassword] = useState("Initial State");
     const [validConfirmPassword, setValidConfirmPassword] = useState("Initial State");
@@ -37,7 +35,7 @@ export default function SignUpPage() {
     function dataIsValid() {
 
         return validName == true && validBirth == true && validCountry == true && validState == true && validCity == true &&
-            validAddress == true && validZipCode == true && validEmail == true && validPassword == true && 
+            validAddress == true && validEmail == true && validPassword == true && 
             validConfirmPassword == true;
     }
 
@@ -49,19 +47,22 @@ export default function SignUpPage() {
             setIsLoading(true);
 
             const userToRegister = {
+                id: 0,
                 name: name,
                 dateOfBirth: dateOfBirth,
+                email: email,
+                password: password,
                 country: selectedCountry,
                 state: countryState,
                 city: city,
                 address: address,
-                zipCode: zipCode,
-                email: email,
-                password: password,
                 isAdministrator: isAdministrator
             };
     
-            fetch("http://localhost:9000/users/add", {
+            fetch("http://localhost:8080/users/add", {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 method: "POST",
                 body: JSON.stringify(userToRegister)
             })
@@ -69,7 +70,15 @@ export default function SignUpPage() {
                 return r.json();
             })
             .then(r => {
-                alert("You have been successfully registered!");
+                
+                if (parseInt(r.status) == 200) {
+                    alert("You have been successfully registered!");
+                    window.location.href = '/login';
+                }
+                else {
+                    setWarning("Error Status " + r.status + ": " + r.error);
+                }
+                
                 setIsLoading(false);
             })
             .catch(e => {
@@ -221,7 +230,7 @@ export default function SignUpPage() {
                     <div className="row mb-4">
                         <div className="form-group col-md-4">
                             <label className="fw-bold">
-                                Birth <h6 style={{fontSize: 12, fontWeight: "bold"}}>Minimum age: 18 years</h6>
+                                Date of Birth <h6 style={{fontSize: 12, fontWeight: "bold"}}>Minimum age: 18 years</h6>
                             </label>
                             <input type="date" className={validBirth == false ? "form-control is-invalid" : "form-control"} 
                             onChange={(e) => handleBirthInput(e.target.value)} />
@@ -296,21 +305,9 @@ export default function SignUpPage() {
                                 <></>
                             }
                         </div>
-                        <div className="form-group col-md-4">
-                            <label className="fw-bold">ZIP Code</label>
-                            <input type="text" className={validZipCode == false ? "form-control is-invalid" : "form-control"}
-                                onChange={(e) => handleZipCodeInput(e.target.value)} />
-                            
-                            {
-                                validZipCode == false ?
-                                <p style={{color: "red", fontSize: 14}}>Please enter your ZIP code.</p>
-                                :
-                                <></>
-                            }
-                        </div>
                     </div>
                     <div className="row mb-4">
-                        <div className="form-group col-md-6">
+                        <div className="form-group col-sm-4">
                             <label className="fw-bold">Email</label>
                             <input type="email" className={validEmail == false ? "form-control is-invalid" : "form-control"}
                                 onChange={(e) => handleEmailInput(e.target.value)} />
@@ -321,8 +318,6 @@ export default function SignUpPage() {
                                 <></>
                             }
                         </div>
-                    </div>
-                    <div className="row mb-4">
                         <div className="form-group col-sm-4">
                             <label className="fw-bold">Password</label>
                             <input type="password" className={validPassword == false ? "form-control is-invalid" : "form-control"}
