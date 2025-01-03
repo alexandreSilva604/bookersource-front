@@ -9,9 +9,45 @@ export default function LoginPage() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
 
+    const [warning, setWarning] = useState("");
+
     function login() {
 
-        // Validate the information and log the user in
+        setWarning("");
+
+        if (loginEmail != "" && loginPassword != "") {
+
+            const dataBody = {
+                email: loginEmail,
+                password: loginPassword
+            }
+
+            fetch("http://localhost:8080/users/authenticate", {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(dataBody)
+            })
+            .then(r => {
+                return r.json();
+            })
+            .then(r => {
+    
+                if (parseInt(r.status) == 200) {
+                    window.location.href = '/';
+                }
+                else {
+                    setWarning("Invalid email or password.");
+                }
+            })
+            .catch(e => {
+                setWarning("Error: ", e.message);
+            })
+        }
+        else {
+            setWarning("Please enter the required information");
+        }
     }
 
     return (
@@ -20,6 +56,13 @@ export default function LoginPage() {
 
             <div className="container" style={{width: "20em", padding: "2em"}}>
                 <form>
+                    {
+                        warning != "" ?
+                        <p style={{color: "red", fontWeight: "bold"}}>{warning}</p>
+                        :
+                        <></>
+                    }
+
                     <div className="form-group">
                         <span className="fw-bold">Email</span>
                         <input type="email" className="form-control" autoFocus={true} 
