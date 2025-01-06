@@ -34,7 +34,8 @@ export default function LoginPage() {
             })
             .then(r => {
     
-                if (parseInt(r.status) == 200) {
+                if (r.user) {
+                    localStorage.setItem("loggedUser", JSON.stringify(r.user));
                     window.location.href = '/';
                 }
                 else {
