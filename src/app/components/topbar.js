@@ -1,6 +1,21 @@
+'use client'
+
 import Link from "next/link";
+import { useContext, useEffect } from "react";
+import UserContext from "../context/userContext";
 
 export default function TopBar() {
+
+    let user = useContext(UserContext);
+
+    useEffect(() => {
+        console.log(user);
+    }, []);
+
+    function signOut() {
+
+        // Code goes here...
+    }
 
     return (
         <nav className={"navbar navbar-expand-lg navbar-light"}>
@@ -13,11 +28,27 @@ export default function TopBar() {
                         <li className="nav-item"><Link className="nav-link" href="/hotels" style={{color: '#22a'}}>Hotels</Link></li>
                         <li className="nav-item"><Link className="nav-link" href="/" style={{color: '#22a'}}>About</Link></li>
                     </ul>
-                    <ul className="navbar-nav align-items-center">
-                        <li className="nav-item"><Link className="nav-link" href="/login" style={{color: '#22a'}}>Login</Link></li>
-                        |
-                        <li className="nav-item"><Link className="nav-link" href="/signup" style={{color: '#22a'}}>Sign In</Link></li>
-                    </ul>
+                        <div className="d-flex align-items-center">
+                            <div>
+                                {
+                                    user ? 
+                                    user.name 
+                                    :
+                                    <Link className="text-decoration-none" href="/login" style={{color: '#22a'}}>Login</Link>
+                                }
+                            </div>
+                            <div style={{cursor: 'default', marginLeft: 10, marginRight: 10}}>|</div>
+                            <div>
+                                {
+                                    user ? 
+                                    <span style={{cursor: 'pointer'}} onClick={signOut}>
+                                        Sign Out
+                                    </span> 
+                                    : 
+                                    <Link className="text-decoration-none" href="/signup" style={{color: '#22a'}}>Sign In</Link>
+                                }
+                            </div>
+                        </div>
                 </div>
             </div>
         </nav>
