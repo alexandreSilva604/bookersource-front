@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
             <body className={styles.bodyStyling}>
               {
                 userChecked ?
-                <UserContext.Provider value={user}>
+                <UserContext.Provider value={{user, setUser}}>
                   <TopBar />
                   {children}
                   <footer className="py-5">

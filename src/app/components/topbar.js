@@ -6,15 +6,27 @@ import UserContext from "../context/userContext";
 
 export default function TopBar() {
 
-    let user = useContext(UserContext);
-
-    useEffect(() => {
-        console.log(user);
-    }, []);
+    let { user, setUser } = useContext(UserContext);
 
     function signOut() {
 
-        // Code goes here...
+        fetch("http://localhost:8080/users/logout", {
+            headers: {
+                'Content-Type': "application/json"
+            },
+            method: "GET"
+        })
+        .then(r => {
+            return r.json();
+        })
+        .then(r => {
+            setUser(null);
+            localStorage.removeItem("loggedUser");
+            window.location.href = '/';
+        })
+        .catch(e => {
+            console.log(e.message);
+        })
     }
 
     return (
