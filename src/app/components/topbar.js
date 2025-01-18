@@ -44,7 +44,7 @@ export default function TopBar() {
                             <div>
                                 {
                                     user ? 
-                                    user.name 
+                                    <Link className="text-decoration-none" href="/profile" style={{color: '#22a'}}>{user.name}</Link> 
                                     :
                                     <Link className="text-decoration-none" href="/login" style={{color: '#22a'}}>Login</Link>
                                 }
