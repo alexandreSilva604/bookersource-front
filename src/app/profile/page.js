@@ -76,6 +76,7 @@ export default function Profile() {
                         <p><b>Email:</b> {user.email}</p>
                         <p><b>Address:</b> {user.address}</p>
                         <p><b>City:</b> {user.city}, {user.state}</p>
+                        <p><b>Number:</b> {user.phoneNumber}</p>
                     </div>
                 </div>
             </section>
