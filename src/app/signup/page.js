@@ -14,6 +14,7 @@ export default function SignUpPage() {
     const [countryState, setCountryState] = useState("");
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,6 +26,7 @@ export default function SignUpPage() {
     const [validState, setValidState] = useState("Initial State");
     const [validCity, setValidCity] = useState("Initial State");
     const [validAddress, setValidAddress] = useState("Initial State");
+    const [validPhoneNumber, setValidPhoneNumber] = useState("Initial State");
     const [validEmail, setValidEmail] = useState("Initial State");
     const [validPassword, setValidPassword] = useState("Initial State");
     const [validConfirmPassword, setValidConfirmPassword] = useState("Initial State");
@@ -35,7 +37,7 @@ export default function SignUpPage() {
     function dataIsValid() {
 
         return validName == true && validBirth == true && validCountry == true && validState == true && validCity == true &&
-            validAddress == true && validEmail == true && validPassword == true && 
+            validAddress == true && validPhoneNumber == true && validEmail == true && validPassword == true && 
             validConfirmPassword == true;
     }
 
@@ -56,6 +58,7 @@ export default function SignUpPage() {
                 state: countryState,
                 city: city,
                 address: address,
+                phoneNumber: phoneNumber,
                 isAdministrator: isAdministrator
             };
     
@@ -165,10 +168,10 @@ export default function SignUpPage() {
         setAddress(addressInput);
     }
 
-    function handleZipCodeInput(zipCodeInput) {
+    function handlePhoneNumberInput(phoneNumberInput) {
 
-        setValidZipCode(zipCodeInput != "");
-        setZipCode(zipCodeInput);
+        setValidPhoneNumber(phoneNumberInput != "");
+        setPhoneNumber(phoneNumberInput);
     }
 
     function handleEmailInput(emailInput) {
@@ -301,6 +304,17 @@ export default function SignUpPage() {
                             {
                                 validAddress == false ?
                                 <p style={{color: "red", fontSize: 14}}>Please enter your address.</p>
+                                :
+                                <></>
+                            }
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label className="fw-bold">Phone Number</label>
+                            <input className={validPhoneNumber == false ? "form-control is-invalid" : "form-control"}
+                                onChange={(e) => handlePhoneNumberInput(e.target.value)} maxLength={25} />
+                            {
+                                validPhoneNumber == false ?
+                                <p style={{color: "red", fontSize: 14}}>Please enter a phone number.</p>
                                 :
                                 <></>
                             }
