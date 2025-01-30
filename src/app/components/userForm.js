@@ -277,7 +277,7 @@ export default function UserForm(props) {
                     defaultValue={props.user ? props.user.name : ""} />
                     {
                         validName == false ?
-                        <p style={{color: "red", fontSize: 14}}>Please enter a name with at least 8 characters.</p>
+                        <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Please enter a name with at least 8 characters.</p>
                         :
                         <></>
                     }
@@ -293,7 +293,7 @@ export default function UserForm(props) {
                     defaultValue={props.user ? props.user.dateOfBirth : ""}/>
                     {
                         validBirth == false ?
-                        <p style={{color: "red", fontSize: 14}}>Enter a valid date.</p>
+                        <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Enter a valid date.</p>
                         :
                         <></>
                     }
@@ -318,7 +318,7 @@ export default function UserForm(props) {
                     </select>
                     {
                         validCountry == false ?
-                        <p style={{color: "red", fontSize: 14}}>Please select a country.</p>
+                        <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Please select a country.</p>
                         :
                         <></>
                     }
@@ -331,7 +331,7 @@ export default function UserForm(props) {
                         onChange={(e) => handleStateInput(e.target.value)} defaultValue={countryState} />
                     {
                         validState == false ?
-                        <p style={{color: "red", fontSize: 14}}>Please enter a state name.</p>
+                        <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Please enter a state name.</p>
                         :
                         <></>
                     }
@@ -344,7 +344,7 @@ export default function UserForm(props) {
                         onChange={(e) => handleCityInput(e.target.value)} defaultValue={city} />
                     {
                         validCity == false ?
-                        <p style={{color: "red", fontSize: 14}}>Please enter a city name.</p>
+                        <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Please enter a city name.</p>
                         :
                         <></>
                     }
@@ -358,7 +358,7 @@ export default function UserForm(props) {
                         onChange={(e) => handleAddressInput(e.target.value)} defaultValue={address} />
                     {
                         validAddress == false ?
-                        <p style={{color: "red", fontSize: 14}}>Please enter your address.</p>
+                        <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Please enter your address.</p>
                         :
                         <></>
                     }
@@ -369,7 +369,7 @@ export default function UserForm(props) {
                         onChange={(e) => handlePhoneNumberInput(e.target.value)} maxLength={25} defaultValue={phoneNumber} />
                     {
                         validPhoneNumber == false ?
-                        <p style={{color: "red", fontSize: 14}}>Please enter a phone number.</p>
+                        <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Please enter a phone number.</p>
                         :
                         <></>
                     }
@@ -382,7 +382,7 @@ export default function UserForm(props) {
                         onChange={(e) => handleEmailInput(e.target.value)} defaultValue={email} />
                     {
                         validEmail == false ?
-                        <p style={{color: "red", fontSize: 14}}>Please enter a valid email.</p>
+                        <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Please enter a valid email.</p>
                         :
                         <></>
                     }
@@ -395,7 +395,7 @@ export default function UserForm(props) {
                             onChange={(e) => handlePasswordInput(e.target.value)} />
                         {
                             validPassword == false ?
-                            <p style={{color: "red", fontSize: 14}}>Please enter a password.</p>
+                            <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>Please enter a password.</p>
                             :
                             <></>
                         }
@@ -411,7 +411,7 @@ export default function UserForm(props) {
                             onChange={(e) => handleConfirmPasswordInput(e.target.value)} />
                         {
                             validConfirmPassword == false ?
-                            <p style={{color: "red", fontSize: 14}}>This must match the entered password.</p>
+                            <p style={{color: "red", fontSize: 14, fontWeight: 'bold'}}>This must match the entered password.</p>
                             :
                             <></>
                         }
