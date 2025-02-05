@@ -78,7 +78,7 @@ export default function YourHotels() {
                                                     <td>{hotel.state}</td>
                                                     <td>{hotel.country}</td>
                                                     <td>
-                                                        <Link href={`/manageRooms/${hotel.id}`}>
+                                                        <Link href={`/yourHotels/manageRooms/${hotel.id}`}>
                                                             <button className="btn btn-primary"
                                                             style={{backgroundColor: '#22a', border: 'none'}}>
                                                                 Manage Rooms
