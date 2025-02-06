@@ -2,6 +2,7 @@
 
 import Header from "@/app/components/header";
 import { useDynamicRouteParams } from "next/dist/server/app-render/dynamic-rendering";
+import Link from "next/link";
 import { use, useEffect, useState } from "react";
 
 export default function ManageRooms({params: hotelId}) {
@@ -9,7 +10,7 @@ export default function ManageRooms({params: hotelId}) {
     const hotelToFind = use(hotelId);
 
     const [hotel, setHotel] = useState(null);
-    const [floors, setFloors] = useState([]);
+    const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
 
     function loadHotelData() {
@@ -42,9 +43,16 @@ export default function ManageRooms({params: hotelId}) {
 
             <div className="container card mt-5 mb-5">
                 <div className="card-header p-4">
-                    <button className="btn btn-primary" style={{backgroundColor: '#22a', border: 'none'}}>
-                        Add Floor <b>+</b>
-                    </button>
+                    {
+                        loading && hotel == null ?
+                        <p>Loading...</p>
+                        :
+                        <Link href={`/yourHotels/manageRooms/${hotel.id}/addRoom`}>
+                            <button className="btn btn-primary" style={{backgroundColor: '#22a', border: 'none'}}>
+                                Add Room <b>+</b>
+                            </button>
+                        </Link>
+                    }
                 </div>
                 {
                     loading && hotel == null ?
@@ -52,14 +60,14 @@ export default function ManageRooms({params: hotelId}) {
                     :
                     <div className="card-body">
                         {
-                            floors.size > 0
+                            rooms.length > 0
                             ?
                             <table className="table table-hover text-center">
                                 
                             </table>
                             :
                             <div className="d-flex justify-content-center align-items-center mt-5 mb-5">
-                                <h3>Add a floor.</h3>
+                                <h3>There are no rooms for this hotel.</h3>
                             </div>
                         }
                     </div>
