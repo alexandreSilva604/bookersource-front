@@ -1,3 +1,7 @@
+WORK-IN-PROGRESS
+
+An application for registering hotels and reservations. In order to use all of its current features, you must also download and start the [bookersource-back](https://github.com/alexandreSilva604/bookersource-back) application.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
